@@ -33,6 +33,7 @@ class Player:
        self.spotifyInterface.PlayPause()
     def next(self):
        self.spotifyInterface.Next()
+   #todo: fix minutes convertion.
     def microsectolength(self): 
        sum = int(self.track().length)/1000000/60
        formatted = "%5.2f" %(sum)
