@@ -35,9 +35,15 @@ class Player:
        self.spotifyInterface.Next()
    #todo: fix minutes convertion.
     def microsectolength(self): 
-       sum = int(self.track().length)/1000000/60
-       formatted = "%5.2f" %(sum)
+       seconds = int(self.track().length) // 1000000 
+       minutes = seconds // 60
+       rest = seconds % 60
+       formatted = f"{minutes}:{rest:02d}"
        return formatted
+    def title(self):
+       return self.track().title()
+    
+
     def track(self) -> Track:
        meta = self._get_all_props()["Metadata"]
        return Track ( title=meta['xesam:title'], artist=meta['xesam:artist'][0], album=meta['xesam:album'],length=meta['mpris:length'],id=['xesam:id'] )
