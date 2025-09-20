@@ -33,6 +33,12 @@ class Player:
        self.spotifyInterface.PlayPause()
     def next(self):
        self.spotifyInterface.Next()
+    def prev(self):
+      self.spotifyInterface.Previous()
+    def shuffle(self): 
+       self.spotifyInterface.Shuffle()
+    def seek(self): 
+       self.spotifyInterface.Seek()
    #todo: fix minutes convertion.
     def microsectolength(self): 
        seconds = int(self.track().length) // 1000000 
@@ -40,9 +46,10 @@ class Player:
        rest = seconds % 60
        formatted = f"{minutes}:{rest:02d}"
        return formatted
-    def title(self):
-       return self.track().title()
-    
+    def title(self) -> str:
+       return self.track().title
+    def artist(self) -> str: 
+       return self.track().artist
 
     def track(self) -> Track:
        meta = self._get_all_props()["Metadata"]
