@@ -3,12 +3,13 @@ import math
 #from . import Track
 class Track: 
 
-     def __init__(self, *args, title, artist, album, length, id):
+     def __init__(self, *args, title, artist, album, length, id,timeplay):
         self.title = str(title)
         self.artist = str(artist)
         self.album = str(album)
         self.length = str(length)
         self.id = str(id)
+        self.timeplay = str(timeplay)
 class Player: 
     def __init__(self):
       self.bus  = dbus.SessionBus()
@@ -50,7 +51,15 @@ class Player:
        return self.track().title
     def artist(self) -> str: 
        return self.track().artist
-
+    def timePlayed(self) -> str:  
+       seconds = int(self.track().timeplay) // 1000000
+       minutes = seconds / 60
+       rest = seconds % 60
+       formatted = f"{seconds}"
+       return formatted
     def track(self) -> Track:
+       position = self._get_all_props()["Position"]
+     #  print(position)
        meta = self._get_all_props()["Metadata"]
-       return Track ( title=meta['xesam:title'], artist=meta['xesam:artist'][0], album=meta['xesam:album'],length=meta['mpris:length'],id=['xesam:id'] )
+      # print(meta)
+       return Track ( title=meta['xesam:title'], artist=meta['xesam:artist'][0], album=meta['xesam:album'],length=meta['mpris:length'],id=['xesam:id'],timeplay=position )
